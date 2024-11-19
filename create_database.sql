@@ -5,7 +5,7 @@
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-19 21:41:44
+-- Started on 2024-11-19 21:46:18
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -311,8 +311,6 @@ ALTER TABLE public.time_slot ALTER COLUMN time_slot_id ADD GENERATED ALWAYS AS I
 --
 
 COPY public.contact_person (student_id, contact_person_id, name, email, phone_number) FROM stdin;
-1	197612055678	Maria Karlsson	maria.karlsson@example.com	+46703334444
-2	198010103456	Peter Nilsson	peter.nilsson@example.com	+46704445555
 \.
 
 
@@ -323,8 +321,6 @@ COPY public.contact_person (student_id, contact_person_id, name, email, phone_nu
 --
 
 COPY public.instructor (instructor_id, name, personal_number, adress, email, phone_number, can_teach_ensembles) FROM stdin;
-1	Erik Andersson	198705221234	Kungsgatan 12, Stockholm	erik.andersson@example.com	+46701234567	t
-2	Sara Svensson	199012155678	Storgatan 45, Göteborg	sara.svensson@example.com	+46705555555	f
 \.
 
 
@@ -335,9 +331,6 @@ COPY public.instructor (instructor_id, name, personal_number, adress, email, pho
 --
 
 COPY public.instructor_instrument (instrument, instructor_id) FROM stdin;
-Guitar	1
-Piano	1
-Violin	2
 \.
 
 
@@ -348,9 +341,6 @@ Violin	2
 --
 
 COPY public.instrument (instrument_id, instrument_serial_number, brand, monthlyfee, instrument_type) FROM stdin;
-1	A456	Yamaha	200	Guitar
-2	B789	Steinway	300	Piano
-3	C012	Stradivarius	500	Violin
 \.
 
 
@@ -361,8 +351,6 @@ COPY public.instrument (instrument_id, instrument_serial_number, brand, monthlyf
 --
 
 COPY public.lesson (lesson_id, level, minimum_number_of_students, maximum_number_of_students, genre, student_id, instructor_id, price_list_id, time_slot_id) FROM stdin;
-1	Intermediate	2	5	Classical	1	1	2	1
-2	Beginner	1	1	Pop	2	2	1	3
 \.
 
 
@@ -383,11 +371,6 @@ COPY public.lesson_instrument (instrument, lesson_id) FROM stdin;
 --
 
 COPY public.price_list (price_list_id, lesson_type, level, price, valid_from, valid_to) FROM stdin;
-1	Individual	Beginner	200	2024-01-01	\N
-2	Group	Intermediate	150	2024-01-01	\N
-3	Ensemble	Advanced	300	2024-01-01	\N
-4	Individual	Beginner	180	2023-01-01	2023-12-31
-5	Group	Intermediate	140	2023-01-01	2023-12-31
 \.
 
 
@@ -398,8 +381,6 @@ COPY public.price_list (price_list_id, lesson_type, level, price, valid_from, va
 --
 
 COPY public.rental (instrument_id, student_id, rental_time) FROM stdin;
-1	1	2024-11-01 10:00:00
-2	2	2024-11-02 11:00:00
 \.
 
 
@@ -410,8 +391,6 @@ COPY public.rental (instrument_id, student_id, rental_time) FROM stdin;
 --
 
 COPY public.sibling_personal_number (sibling_personal_number, student_id) FROM stdin;
-199305252345	1
-199901014567	2
 \.
 
 
@@ -422,8 +401,6 @@ COPY public.sibling_personal_number (sibling_personal_number, student_id) FROM s
 --
 
 COPY public.student (student_id, name, personal_number, adress, email, phone_number, maximum_rentals) FROM stdin;
-1	Anna Karlsson	200305157890	Vasagatan 18, Malmö	anna.karlsson@example.com	+46701112222	2
-2	Johan Nilsson	199806101234	Drottninggatan 25, Uppsala	johan.nilsson@example.com	+46702223333	1
 \.
 
 
@@ -434,9 +411,6 @@ COPY public.student (student_id, name, personal_number, adress, email, phone_num
 --
 
 COPY public.time_slot (time_slot_id, date, available) FROM stdin;
-1	2024-11-20 10:00:00	t
-2	2024-11-20 11:00:00	f
-3	2024-11-21 14:00:00	t
 \.
 
 
@@ -446,7 +420,7 @@ COPY public.time_slot (time_slot_id, date, available) FROM stdin;
 -- Name: instructor_instructor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.instructor_instructor_id_seq', 2, true);
+SELECT pg_catalog.setval('public.instructor_instructor_id_seq', 1, false);
 
 
 --
@@ -455,7 +429,7 @@ SELECT pg_catalog.setval('public.instructor_instructor_id_seq', 2, true);
 -- Name: instrument_instrument_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.instrument_instrument_id_seq', 3, true);
+SELECT pg_catalog.setval('public.instrument_instrument_id_seq', 1, false);
 
 
 --
@@ -464,7 +438,7 @@ SELECT pg_catalog.setval('public.instrument_instrument_id_seq', 3, true);
 -- Name: lesson_lesson_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.lesson_lesson_id_seq', 2, true);
+SELECT pg_catalog.setval('public.lesson_lesson_id_seq', 1, false);
 
 
 --
@@ -473,7 +447,7 @@ SELECT pg_catalog.setval('public.lesson_lesson_id_seq', 2, true);
 -- Name: price_list_price_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.price_list_price_list_id_seq', 5, true);
+SELECT pg_catalog.setval('public.price_list_price_list_id_seq', 1, false);
 
 
 --
@@ -482,7 +456,7 @@ SELECT pg_catalog.setval('public.price_list_price_list_id_seq', 5, true);
 -- Name: student_student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.student_student_id_seq', 2, true);
+SELECT pg_catalog.setval('public.student_student_id_seq', 1, false);
 
 
 --
@@ -491,7 +465,7 @@ SELECT pg_catalog.setval('public.student_student_id_seq', 2, true);
 -- Name: time_slot_time_slot_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.time_slot_time_slot_id_seq', 3, true);
+SELECT pg_catalog.setval('public.time_slot_time_slot_id_seq', 1, false);
 
 
 --
@@ -737,7 +711,7 @@ ALTER TABLE ONLY public.sibling_personal_number
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 
 
--- Completed on 2024-11-19 21:41:44
+-- Completed on 2024-11-19 21:46:18
 
 --
 -- PostgreSQL database dump complete
