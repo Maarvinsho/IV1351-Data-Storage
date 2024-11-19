@@ -58,7 +58,7 @@ VALUES
 INSERT INTO lesson (level, minimum_number_of_students, maximum_number_of_students, genre, student_id, instructor_id, price_list_id, time_slot_id)
 VALUES
 ('Intermediate', 2, 5, 'Classical', 1, 1, 2, 1), -- Anna Karlsson takes Group lesson
-('Beginner', 1, 3, 'Pop', 2, 2, 1, 3);          -- Johan Nilsson takes Individual lesson
+('Beginner', 1, 1, 'Pop', 2, 2, 1, 3);          -- Johan Nilsson takes Individual lesson
 
 -- Insert into lesson_instrument table
 INSERT INTO lesson_instrument (instrument, lesson_id)
