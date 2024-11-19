@@ -1,8 +1,8 @@
 -- Insert into instructor table
 INSERT INTO instructor (name, personal_number, adress, email, phone_number, can_teach_ensembles)
 VALUES
-('Erik Andersson', '19870522-1234', 'Kungsgatan 12, Stockholm', 'erik.andersson@example.com', '+46701234567', TRUE),
-('Sara Svensson', '19901215-5678', 'Storgatan 45, Göteborg', 'sara.svensson@example.com', '+46705555555', FALSE);
+('Erik Andersson', '198705221234', 'Kungsgatan 12, Stockholm', 'erik.andersson@example.com', '+46701234567', TRUE),
+('Sara Svensson', '199012155678', 'Storgatan 45, Göteborg', 'sara.svensson@example.com', '+46705555555', FALSE);
 
 -- Insert into instrument table
 INSERT INTO instrument (instrument_serial_number, brand, monthlyFee, instrument_type)
@@ -21,20 +21,20 @@ VALUES
 -- Insert into student table
 INSERT INTO student (name, personal_number, adress, email, phone_number, maximum_rentals)
 VALUES
-('Anna Karlsson', '20030515-7890', 'Vasagatan 18, Malmö', 'anna.karlsson@example.com', '+46701112222', 2),
-('Johan Nilsson', '19980610-1234', 'Drottninggatan 25, Uppsala', 'johan.nilsson@example.com', '+46702223333', 1);
+('Anna Karlsson', '200305157890', 'Vasagatan 18, Malmö', 'anna.karlsson@example.com', '+46701112222', 2),
+('Johan Nilsson', '199806101234', 'Drottninggatan 25, Uppsala', 'johan.nilsson@example.com', '+46702223333', 1);
 
 -- Insert into contact_person table
 INSERT INTO contact_person (student_id, contact_person_id, name, email, phone_number)
 VALUES
-(1, '19761205-5678', 'Maria Karlsson', 'maria.karlsson@example.com', '+46703334444'),
-(2, '19801010-3456', 'Peter Nilsson', 'peter.nilsson@example.com', '+46704445555');
+(1, '197612055678', 'Maria Karlsson', 'maria.karlsson@example.com', '+46703334444'),
+(2, '198010103456', 'Peter Nilsson', 'peter.nilsson@example.com', '+46704445555');
 
 -- Insert into sibling_personal_number table
 INSERT INTO sibling_personal_number (sibling_personal_number, student_id)
 VALUES
-('19930525-2345', 1), -- Sibling of Anna Karlsson
-('19990101-4567', 2); -- Sibling of Johan Nilsson
+('199305252345', 1), -- Sibling of Anna Karlsson
+('199901014567', 2); -- Sibling of Johan Nilsson
 
 -- Insert into time_slot table
 INSERT INTO time_slot (date, available)
