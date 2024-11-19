@@ -5,7 +5,7 @@
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-19 02:08:54
+-- Started on 2024-11-19 02:44:02
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,118 +20,30 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 235 (class 1255 OID 16533)
--- Name: auto_insert_contact_person(); Type: FUNCTION; Schema: public; Owner: postgres
+-- TOC entry 5 (class 2615 OID 17239)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
-CREATE FUNCTION public.auto_insert_contact_person() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Automatically insert a default contact person for the new student
-    INSERT INTO contact_person (student_id, contact_person_id, name, email, phone_number)
-    VALUES
-    (NEW.student_id, '000000000000', 'Default Contact', 'default@example.com', '555-0000');
-
-    RETURN NEW;
-END;
-$$;
+-- *not* creating schema, since initdb creates it
 
 
-ALTER FUNCTION public.auto_insert_contact_person() OWNER TO postgres;
+ALTER SCHEMA public OWNER TO postgres;
 
 --
--- TOC entry 234 (class 1255 OID 16531)
--- Name: auto_insert_instruments(); Type: FUNCTION; Schema: public; Owner: postgres
+-- TOC entry 4894 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
 --
 
-CREATE FUNCTION public.auto_insert_instruments() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Automatically insert default instruments for the new instructor
-    INSERT INTO instructor_instrument (instrument, instructor_id)
-    VALUES
-    ('Guitar', NEW.instructor_id),
-    ('Piano', NEW.instructor_id),
-    ('Violin', NEW.instructor_id);
+COMMENT ON SCHEMA public IS '';
 
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.auto_insert_instruments() OWNER TO postgres;
-
---
--- TOC entry 236 (class 1255 OID 16535)
--- Name: auto_insert_lesson_instruments(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.auto_insert_lesson_instruments() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Automatically associate a default instrument with the new lesson
-    INSERT INTO lesson_instrument (instrument, lesson_id)
-    VALUES
-    ('Guitar', NEW.lesson_id);
-
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.auto_insert_lesson_instruments() OWNER TO postgres;
-
---
--- TOC entry 237 (class 1255 OID 16537)
--- Name: auto_insert_rental(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.auto_insert_rental() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Automatically create a rental record for the new student
-    INSERT INTO rental (instrument_id, student_id, rental_time)
-    VALUES
-    (1, NEW.student_id, CURRENT_TIMESTAMP); -- Default instrument_id is 1
-
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.auto_insert_rental() OWNER TO postgres;
-
---
--- TOC entry 238 (class 1255 OID 16539)
--- Name: auto_insert_sibling(); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION public.auto_insert_sibling() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    -- Automatically create a sibling record for the new student
-    INSERT INTO sibling_personal_number (sibling_personal_number, student_id)
-    VALUES
-    ('000000000000', NEW.student_id);
-
-    RETURN NEW;
-END;
-$$;
-
-
-ALTER FUNCTION public.auto_insert_sibling() OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- TOC entry 226 (class 1259 OID 17036)
+-- TOC entry 226 (class 1259 OID 17638)
 -- Name: contact_person; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -147,7 +59,7 @@ CREATE TABLE public.contact_person (
 ALTER TABLE public.contact_person OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 16994)
+-- TOC entry 218 (class 1259 OID 17596)
 -- Name: instructor; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -165,7 +77,7 @@ CREATE TABLE public.instructor (
 ALTER TABLE public.instructor OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 16993)
+-- TOC entry 217 (class 1259 OID 17595)
 -- Name: instructor_instructor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -180,7 +92,7 @@ ALTER TABLE public.instructor ALTER COLUMN instructor_id ADD GENERATED ALWAYS AS
 
 
 --
--- TOC entry 219 (class 1259 OID 17001)
+-- TOC entry 219 (class 1259 OID 17603)
 -- Name: instructor_instrument; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -193,7 +105,7 @@ CREATE TABLE public.instructor_instrument (
 ALTER TABLE public.instructor_instrument OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 17012)
+-- TOC entry 221 (class 1259 OID 17614)
 -- Name: instrument; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -209,7 +121,7 @@ CREATE TABLE public.instrument (
 ALTER TABLE public.instrument OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 17011)
+-- TOC entry 220 (class 1259 OID 17613)
 -- Name: instrument_instrument_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -224,7 +136,7 @@ ALTER TABLE public.instrument ALTER COLUMN instrument_id ADD GENERATED ALWAYS AS
 
 
 --
--- TOC entry 231 (class 1259 OID 17065)
+-- TOC entry 231 (class 1259 OID 17667)
 -- Name: lesson; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -244,7 +156,7 @@ CREATE TABLE public.lesson (
 ALTER TABLE public.lesson OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 17090)
+-- TOC entry 232 (class 1259 OID 17692)
 -- Name: lesson_instrument; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -257,7 +169,7 @@ CREATE TABLE public.lesson_instrument (
 ALTER TABLE public.lesson_instrument OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1259 OID 17064)
+-- TOC entry 230 (class 1259 OID 17666)
 -- Name: lesson_lesson_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -272,7 +184,7 @@ ALTER TABLE public.lesson ALTER COLUMN lesson_id ADD GENERATED ALWAYS AS IDENTIT
 
 
 --
--- TOC entry 223 (class 1259 OID 17020)
+-- TOC entry 223 (class 1259 OID 17622)
 -- Name: price_list; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -288,7 +200,7 @@ CREATE TABLE public.price_list (
 ALTER TABLE public.price_list OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 17019)
+-- TOC entry 222 (class 1259 OID 17621)
 -- Name: price_list_price_list_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -303,7 +215,7 @@ ALTER TABLE public.price_list ALTER COLUMN price_list_id ADD GENERATED ALWAYS AS
 
 
 --
--- TOC entry 233 (class 1259 OID 17100)
+-- TOC entry 233 (class 1259 OID 17702)
 -- Name: rental; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -317,7 +229,7 @@ CREATE TABLE public.rental (
 ALTER TABLE public.rental OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 17048)
+-- TOC entry 227 (class 1259 OID 17650)
 -- Name: sibling_personal_number; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -330,7 +242,7 @@ CREATE TABLE public.sibling_personal_number (
 ALTER TABLE public.sibling_personal_number OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 17026)
+-- TOC entry 225 (class 1259 OID 17628)
 -- Name: student; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -349,7 +261,7 @@ CREATE TABLE public.student (
 ALTER TABLE public.student OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 17025)
+-- TOC entry 224 (class 1259 OID 17627)
 -- Name: student_student_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -364,7 +276,7 @@ ALTER TABLE public.student ALTER COLUMN student_id ADD GENERATED ALWAYS AS IDENT
 
 
 --
--- TOC entry 229 (class 1259 OID 17059)
+-- TOC entry 229 (class 1259 OID 17661)
 -- Name: time_slot; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -378,7 +290,7 @@ CREATE TABLE public.time_slot (
 ALTER TABLE public.time_slot OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 17058)
+-- TOC entry 228 (class 1259 OID 17660)
 -- Name: time_slot_time_slot_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -393,7 +305,7 @@ ALTER TABLE public.time_slot ALTER COLUMN time_slot_id ADD GENERATED ALWAYS AS I
 
 
 --
--- TOC entry 4886 (class 0 OID 17036)
+-- TOC entry 4881 (class 0 OID 17638)
 -- Dependencies: 226
 -- Data for Name: contact_person; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -403,7 +315,7 @@ COPY public.contact_person (student_id, contact_person_id, name, email, phone_nu
 
 
 --
--- TOC entry 4878 (class 0 OID 16994)
+-- TOC entry 4873 (class 0 OID 17596)
 -- Dependencies: 218
 -- Data for Name: instructor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -413,7 +325,7 @@ COPY public.instructor (instructor_id, name, personal_number, adress, email, pho
 
 
 --
--- TOC entry 4879 (class 0 OID 17001)
+-- TOC entry 4874 (class 0 OID 17603)
 -- Dependencies: 219
 -- Data for Name: instructor_instrument; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -423,7 +335,7 @@ COPY public.instructor_instrument (instrument, instructor_id) FROM stdin;
 
 
 --
--- TOC entry 4881 (class 0 OID 17012)
+-- TOC entry 4876 (class 0 OID 17614)
 -- Dependencies: 221
 -- Data for Name: instrument; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -433,7 +345,7 @@ COPY public.instrument (instrument_id, instrument_serial_number, brand, monthlyf
 
 
 --
--- TOC entry 4891 (class 0 OID 17065)
+-- TOC entry 4886 (class 0 OID 17667)
 -- Dependencies: 231
 -- Data for Name: lesson; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -443,7 +355,7 @@ COPY public.lesson (lesson_id, level, minimum_number_of_students, maximum_number
 
 
 --
--- TOC entry 4892 (class 0 OID 17090)
+-- TOC entry 4887 (class 0 OID 17692)
 -- Dependencies: 232
 -- Data for Name: lesson_instrument; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -453,7 +365,7 @@ COPY public.lesson_instrument (instrument, lesson_id) FROM stdin;
 
 
 --
--- TOC entry 4883 (class 0 OID 17020)
+-- TOC entry 4878 (class 0 OID 17622)
 -- Dependencies: 223
 -- Data for Name: price_list; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -463,7 +375,7 @@ COPY public.price_list (price_list_id, lesson_type, level, price, is_valid) FROM
 
 
 --
--- TOC entry 4893 (class 0 OID 17100)
+-- TOC entry 4888 (class 0 OID 17702)
 -- Dependencies: 233
 -- Data for Name: rental; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -473,7 +385,7 @@ COPY public.rental (instrument_id, student_id, rental_time) FROM stdin;
 
 
 --
--- TOC entry 4887 (class 0 OID 17048)
+-- TOC entry 4882 (class 0 OID 17650)
 -- Dependencies: 227
 -- Data for Name: sibling_personal_number; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -483,7 +395,7 @@ COPY public.sibling_personal_number (sibling_personal_number, student_id) FROM s
 
 
 --
--- TOC entry 4885 (class 0 OID 17026)
+-- TOC entry 4880 (class 0 OID 17628)
 -- Dependencies: 225
 -- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -493,7 +405,7 @@ COPY public.student (student_id, name, personal_number, adress, email, phone_num
 
 
 --
--- TOC entry 4889 (class 0 OID 17059)
+-- TOC entry 4884 (class 0 OID 17661)
 -- Dependencies: 229
 -- Data for Name: time_slot; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -503,7 +415,7 @@ COPY public.time_slot (time_slot_id, date, available) FROM stdin;
 
 
 --
--- TOC entry 4899 (class 0 OID 0)
+-- TOC entry 4896 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: instructor_instructor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -512,7 +424,7 @@ SELECT pg_catalog.setval('public.instructor_instructor_id_seq', 1, false);
 
 
 --
--- TOC entry 4900 (class 0 OID 0)
+-- TOC entry 4897 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: instrument_instrument_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -521,7 +433,7 @@ SELECT pg_catalog.setval('public.instrument_instrument_id_seq', 1, false);
 
 
 --
--- TOC entry 4901 (class 0 OID 0)
+-- TOC entry 4898 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: lesson_lesson_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -530,7 +442,7 @@ SELECT pg_catalog.setval('public.lesson_lesson_id_seq', 1, false);
 
 
 --
--- TOC entry 4902 (class 0 OID 0)
+-- TOC entry 4899 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: price_list_price_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -539,7 +451,7 @@ SELECT pg_catalog.setval('public.price_list_price_list_id_seq', 1, false);
 
 
 --
--- TOC entry 4903 (class 0 OID 0)
+-- TOC entry 4900 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: student_student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -548,7 +460,7 @@ SELECT pg_catalog.setval('public.student_student_id_seq', 1, false);
 
 
 --
--- TOC entry 4904 (class 0 OID 0)
+-- TOC entry 4901 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: time_slot_time_slot_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -557,7 +469,7 @@ SELECT pg_catalog.setval('public.time_slot_time_slot_id_seq', 1, false);
 
 
 --
--- TOC entry 4709 (class 2606 OID 17042)
+-- TOC entry 4704 (class 2606 OID 17644)
 -- Name: contact_person contact_person_contact_person_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -566,7 +478,7 @@ ALTER TABLE ONLY public.contact_person
 
 
 --
--- TOC entry 4693 (class 2606 OID 17000)
+-- TOC entry 4688 (class 2606 OID 17602)
 -- Name: instructor instructor_personal_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -575,7 +487,7 @@ ALTER TABLE ONLY public.instructor
 
 
 --
--- TOC entry 4699 (class 2606 OID 17018)
+-- TOC entry 4694 (class 2606 OID 17620)
 -- Name: instrument instrument_instrument_serial_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -584,7 +496,7 @@ ALTER TABLE ONLY public.instrument
 
 
 --
--- TOC entry 4711 (class 2606 OID 17040)
+-- TOC entry 4706 (class 2606 OID 17642)
 -- Name: contact_person pk_contact_person; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -593,7 +505,7 @@ ALTER TABLE ONLY public.contact_person
 
 
 --
--- TOC entry 4695 (class 2606 OID 16998)
+-- TOC entry 4690 (class 2606 OID 17600)
 -- Name: instructor pk_instructor; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -602,7 +514,7 @@ ALTER TABLE ONLY public.instructor
 
 
 --
--- TOC entry 4697 (class 2606 OID 17005)
+-- TOC entry 4692 (class 2606 OID 17607)
 -- Name: instructor_instrument pk_instructor_instrument; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -611,7 +523,7 @@ ALTER TABLE ONLY public.instructor_instrument
 
 
 --
--- TOC entry 4701 (class 2606 OID 17016)
+-- TOC entry 4696 (class 2606 OID 17618)
 -- Name: instrument pk_instrument; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -620,7 +532,7 @@ ALTER TABLE ONLY public.instrument
 
 
 --
--- TOC entry 4717 (class 2606 OID 17069)
+-- TOC entry 4712 (class 2606 OID 17671)
 -- Name: lesson pk_lesson; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -629,7 +541,7 @@ ALTER TABLE ONLY public.lesson
 
 
 --
--- TOC entry 4719 (class 2606 OID 17094)
+-- TOC entry 4714 (class 2606 OID 17696)
 -- Name: lesson_instrument pk_lesson_instrument; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -638,7 +550,7 @@ ALTER TABLE ONLY public.lesson_instrument
 
 
 --
--- TOC entry 4703 (class 2606 OID 17024)
+-- TOC entry 4698 (class 2606 OID 17626)
 -- Name: price_list pk_price_list; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -647,7 +559,7 @@ ALTER TABLE ONLY public.price_list
 
 
 --
--- TOC entry 4721 (class 2606 OID 17104)
+-- TOC entry 4716 (class 2606 OID 17706)
 -- Name: rental pk_rental; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -656,7 +568,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 4713 (class 2606 OID 17052)
+-- TOC entry 4708 (class 2606 OID 17654)
 -- Name: sibling_personal_number pk_sibling_personal_number; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -665,7 +577,7 @@ ALTER TABLE ONLY public.sibling_personal_number
 
 
 --
--- TOC entry 4705 (class 2606 OID 17033)
+-- TOC entry 4700 (class 2606 OID 17635)
 -- Name: student pk_student; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -674,7 +586,7 @@ ALTER TABLE ONLY public.student
 
 
 --
--- TOC entry 4715 (class 2606 OID 17063)
+-- TOC entry 4710 (class 2606 OID 17665)
 -- Name: time_slot pk_time_slot; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -683,7 +595,7 @@ ALTER TABLE ONLY public.time_slot
 
 
 --
--- TOC entry 4707 (class 2606 OID 17035)
+-- TOC entry 4702 (class 2606 OID 17637)
 -- Name: student student_personal_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -692,7 +604,7 @@ ALTER TABLE ONLY public.student
 
 
 --
--- TOC entry 4723 (class 2606 OID 17043)
+-- TOC entry 4718 (class 2606 OID 17645)
 -- Name: contact_person fk_contact_person; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -701,7 +613,7 @@ ALTER TABLE ONLY public.contact_person
 
 
 --
--- TOC entry 4722 (class 2606 OID 17006)
+-- TOC entry 4717 (class 2606 OID 17608)
 -- Name: instructor_instrument fk_instructor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -710,7 +622,7 @@ ALTER TABLE ONLY public.instructor_instrument
 
 
 --
--- TOC entry 4725 (class 2606 OID 17075)
+-- TOC entry 4720 (class 2606 OID 17677)
 -- Name: lesson fk_lesson_instructor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -719,7 +631,7 @@ ALTER TABLE ONLY public.lesson
 
 
 --
--- TOC entry 4729 (class 2606 OID 17095)
+-- TOC entry 4724 (class 2606 OID 17697)
 -- Name: lesson_instrument fk_lesson_instrument; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -728,7 +640,7 @@ ALTER TABLE ONLY public.lesson_instrument
 
 
 --
--- TOC entry 4726 (class 2606 OID 17080)
+-- TOC entry 4721 (class 2606 OID 17682)
 -- Name: lesson fk_lesson_price; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -737,7 +649,7 @@ ALTER TABLE ONLY public.lesson
 
 
 --
--- TOC entry 4727 (class 2606 OID 17070)
+-- TOC entry 4722 (class 2606 OID 17672)
 -- Name: lesson fk_lesson_student; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -746,7 +658,7 @@ ALTER TABLE ONLY public.lesson
 
 
 --
--- TOC entry 4728 (class 2606 OID 17085)
+-- TOC entry 4723 (class 2606 OID 17687)
 -- Name: lesson fk_lesson_time; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -755,7 +667,7 @@ ALTER TABLE ONLY public.lesson
 
 
 --
--- TOC entry 4730 (class 2606 OID 17105)
+-- TOC entry 4725 (class 2606 OID 17707)
 -- Name: rental fk_rental_instrument; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -764,7 +676,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 4731 (class 2606 OID 17110)
+-- TOC entry 4726 (class 2606 OID 17712)
 -- Name: rental fk_rental_student; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -773,7 +685,7 @@ ALTER TABLE ONLY public.rental
 
 
 --
--- TOC entry 4724 (class 2606 OID 17053)
+-- TOC entry 4719 (class 2606 OID 17655)
 -- Name: sibling_personal_number fk_sibling; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -781,7 +693,16 @@ ALTER TABLE ONLY public.sibling_personal_number
     ADD CONSTRAINT fk_sibling FOREIGN KEY (student_id) REFERENCES public.student(student_id) ON DELETE CASCADE;
 
 
--- Completed on 2024-11-19 02:08:54
+--
+-- TOC entry 4895 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE USAGE ON SCHEMA public FROM PUBLIC;
+
+
+-- Completed on 2024-11-19 02:44:02
 
 --
 -- PostgreSQL database dump complete
