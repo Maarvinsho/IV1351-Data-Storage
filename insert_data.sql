@@ -53,7 +53,7 @@ VALUES
 -- Insert data into lesson table
 INSERT INTO lesson (level, minimum_number_of_students, maximum_number_of_students, genre, student_id, instructor_id, price_list_id, time_slot_id)
 VALUES
-('Intermediate', 1, 3, 'Classical', 1, 1, 1, 1), -- Assuming IDs match
+('Intermediate', 1, 3, 'Classical', 1, 1, 1, 1), 
 ('Beginner', 1, 1, 'Pop', 2, 2, 2, 2);
 
 -- Insert data into lesson_instrument table
