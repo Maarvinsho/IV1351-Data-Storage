@@ -30,28 +30,31 @@ ORDER BY
 -- OPTIMERAT VERSION AV QUERY 3 EFTER EXPLAIN ANALYZE   
 
 WITH params AS (
-    SELECT 10 AS month, 2024 AS year -- October, 2024
+    SELECT 10 AS month, 2024 AS year -- Replace with desired month/year
 )
 SELECT
     i.instructor_id AS "Instructor Id",
     i.name AS "Name",
-    COUNT(l.lesson_id) AS "No of Lessons"
+    COUNT(filtered_lessons.lesson_id) AS "No of Lessons"
 FROM
     instructor i
-JOIN
-    lesson l ON i.instructor_id = l.instructor_id
-JOIN
-    time_slot ts ON l.time_slot_id = ts.time_slot_id,
-    params
-WHERE
-    EXTRACT(MONTH FROM ts.date) = params.month
-    AND EXTRACT(YEAR FROM ts.date) = params.year
+JOIN (
+    SELECT
+        l.lesson_id,
+        l.instructor_id
+    FROM
+        lesson l
+    JOIN time_slot ts ON l.time_slot_id = ts.time_slot_id
+    WHERE
+        EXTRACT(MONTH FROM ts.date) = (SELECT month FROM params)
+        AND EXTRACT(YEAR FROM ts.date) = (SELECT year FROM params)
+) filtered_lessons ON i.instructor_id = filtered_lessons.instructor_id
 GROUP BY
     i.instructor_id, i.name
 HAVING
-    COUNT(l.lesson_id) > 0 -- Replace '0' with your desired threshold
+    COUNT(filtered_lessons.lesson_id) > 0
 ORDER BY
-    COUNT(l.lesson_id) DESC;
+    COUNT(filtered_lessons.lesson_id) DESC;
 
 
 -- Benefits of Optimizations
@@ -64,3 +67,5 @@ ORDER BY
 
     --Maintainability:
       --  Using numeric filters (month and year) is more intuitive and easier to adjust programmatically.
+
+
