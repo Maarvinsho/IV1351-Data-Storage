@@ -1,0 +1,18 @@
+INSERT INTO public.historical_lessons (lesson_type, genre, instrument, lesson_price, student_name, student_email)
+SELECT
+    pl.lesson_type,
+    l.genre,
+    COALESCE(li.instrument, '') AS instrument, -- Empty if not applicable
+    pl.price AS lesson_price,
+    s.name AS student_name,
+    s.email AS student_email
+FROM
+    lesson l
+JOIN
+    price_list pl ON l.price_list_id = pl.price_list_id
+LEFT JOIN
+    lesson_instrument li ON l.lesson_id = li.lesson_id 
+JOIN
+    student_lesson sl ON l.lesson_id = sl.lesson_id
+JOIN
+    student s ON sl.student_id = s.student_id;
