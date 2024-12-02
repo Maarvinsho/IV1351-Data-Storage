@@ -1,0 +1,9 @@
+CREATE TABLE public.historical_lessons (
+    lesson_type VARCHAR(20) NOT NULL,
+    genre VARCHAR(100),
+    instrument VARCHAR(100),
+    lesson_price INTEGER NOT NULL,
+    student_name VARCHAR(100) NOT NULL,
+    student_email VARCHAR(200) NOT NULL,
+    recorded_at TIMESTAMP DEFAULT NOW() 
+);
